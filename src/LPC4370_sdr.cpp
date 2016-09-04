@@ -12,6 +12,7 @@
 
 #include "driver/timer.h"
 #include "driver/led1.h"
+#include "driver/rotary_enc.h"
 
 
 using driverTimer::init_systick;
@@ -39,11 +40,21 @@ int main(void) {
     cr_start_m0(SLAVE_M0SUB, &__core_m0sub_START__);
 #endif
 
+    rotaryenc::init_rotary_LED();
+    rotaryenc::turnoff_ROT_LED();
+
+    //turnon_ROT_RED();
+    //turnon_ROT_GREEN();
+
+    rotaryenc::init_rotary_enc();
 
     // Force the counter to be placed into memory
     volatile static int i = 0 ;
     // Enter an infinite loop, just incrementing a counter
     while(1) {
+
+        int btn_status = rotaryenc::btn_check();
+
         systick_delay(500);
         turnon_led1();
 

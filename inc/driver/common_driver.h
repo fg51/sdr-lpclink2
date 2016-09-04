@@ -16,6 +16,7 @@
 //#include "lpc43xx_cgu.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 
 #endif // D_COMMON_DRIVER_H
