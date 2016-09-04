@@ -4,15 +4,25 @@
  *  Created on: Sep 4, 2016
  */
 
-#ifndef TIMER_H_
-#define TIMER_H_
+#ifndef D_TIMER_H
+#define D_TIMER_H
 
 
+#ifdef __cplusplus
+namespace driverTimer {
 extern "C" {
-#include <stdint.h>
+#endif
 
+#include "driver/common_driver.h"
+
+void init_systick(void);
 void systick_delay(uint32_t delayTicks);
+
+
+#ifdef __cplusplus
 }
+} // namespace driverTimer
+#endif
 
+#endif /* D_TIMER_H */
 
-#endif /* TIMER_H_ */

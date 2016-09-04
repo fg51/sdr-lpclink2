@@ -8,34 +8,25 @@
 ===============================================================================
 */
 
-#ifdef __USE_CMSIS
-#include "LPC43xx.h"
-#endif
-
-#include <cr_section_macros.h>
-
-#if defined (__MULTICORE_MASTER_SLAVE_M0APP) | defined (__MULTICORE_MASTER_SLAVE_M0SUB)
-#include "cr_start_m0.h"
-#endif
-
-
-#include <stdio.h>
-
-#include "lpc43xx_gpio.h"
-#include "lpc43xx_cgu.h"
-
+#include "driver/common_driver.h"
 
 #include "driver/timer.h"
+#include "driver/led1.h"
 
 
+using driverTimer::init_systick;
+using driverTimer::systick_delay;
+
+using driverLED::init_led1;
+using driverLED::turnon_led1;
+using driverLED::turnoff_led1;
 
 
 int main(void) {
-    // Setup SysTick Timer to interrupt at 1 msec intervals
-    SysTick_Config(CGU_GetPCLKFrequency(CGU_PERIPHERAL_M4CORE)/1000);
 
-    GPIO_SetDir(0, 1 << 8, 1);
-    GPIO_ClearValue(0, 1 << 8);
+    init_systick();
+
+    init_led1();
 
 
     // Start M0APP slave processor
@@ -54,9 +45,10 @@ int main(void) {
     // Enter an infinite loop, just incrementing a counter
     while(1) {
         systick_delay(500);
-        GPIO_SetValue(0, 1 << 8);
+        turnon_led1();
+
         systick_delay(1000);
-        GPIO_ClearValue(0, 1 << 8);
+        turnoff_led1();
 
         i++ ;
     }
