@@ -18,9 +18,35 @@
 #include "cr_start_m0.h"
 #endif
 
-// TODO: insert other include files here
 
-// TODO: insert other definitions and declarations here
+#include <stdio.h>
+
+#include "lpc43xx_gpio.h"
+
+#include "lpc43xx_cgu.h"
+
+
+volatile uint32_t msTicks; // counter for 1ms SysTicks
+
+
+//  SysTick_Handler - just increment SysTick counter
+extern "C" {
+void SysTick_Handler(void) {
+    msTicks++;
+}
+}
+
+// ****************
+// systick_delay - creates a delay of the appropriate number of Systicks (happens every 1 ms)
+void systick_delay(uint32_t delayTicks) {
+    uint32_t currentTicks;
+
+    currentTicks = msTicks;    //NOTE: read current tick counter
+    // Now loop until required number of ticks passes.
+    while ((msTicks - currentTicks) < delayTicks);
+}
+
+
 
 int main(void) {
 
@@ -40,6 +66,11 @@ int main(void) {
     volatile static int i = 0 ;
     // Enter an infinite loop, just incrementing a counter
     while(1) {
+        systick_delay(500);
+        GPIO_SetValue(0,1<<8);
+        systick_delay(1000);
+        GPIO_ClearValue(0,1<<8);
+
         i++ ;
     }
     return 0 ;
