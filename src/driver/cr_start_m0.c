@@ -31,7 +31,7 @@
 //
 //*****************************************************************************
 
-#include "cr_start_m0.h"
+#include "driver/cr_start_m0.h"
 
 // Provide defines for accessing peripheral registers necessary to release
 // CM0 slave processors from reset. Note that this code does not use the
