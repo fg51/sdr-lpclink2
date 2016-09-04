@@ -26,14 +26,14 @@
 #include "lpc43xx_cgu.h"
 
 
-volatile uint32_t msTicks; // counter for 1ms SysTicks
 
 
 //  SysTick_Handler - just increment SysTick counter
 extern "C" {
+volatile uint32_t msTicks; // counter for 1ms SysTicks
+
 void SysTick_Handler(void) {
     msTicks++;
-}
 }
 
 // ****************
@@ -45,10 +45,17 @@ void systick_delay(uint32_t delayTicks) {
     // Now loop until required number of ticks passes.
     while ((msTicks - currentTicks) < delayTicks);
 }
+}
 
 
 
 int main(void) {
+    // Setup SysTick Timer to interrupt at 1 msec intervals
+    SysTick_Config(CGU_GetPCLKFrequency(CGU_PERIPHERAL_M4CORE)/1000);
+
+    GPIO_SetDir(0,1<<8, 1);
+    GPIO_ClearValue(0,1<<8);
+
 
     // Start M0APP slave processor
 #if defined (__MULTICORE_MASTER_SLAVE_M0APP)
