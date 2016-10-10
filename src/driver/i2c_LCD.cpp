@@ -12,7 +12,7 @@
 #include <lpc43xx_i2c.h>
 
 //#include "clock_cfg.h"
-#include "driver/timer.h"
+#include "driver/systick_cfg.h"
 //}}}
 
 
@@ -47,7 +47,7 @@ void init_i2clcd(void)
     I2C_Init(LPC_I2C0, 10000);
     I2C_Cmd(LPC_I2C0, ENABLE);
 
-    driverTimer::systick_delay(40);
+    driverSysTick::systick_delay(40);
 
     i2clcd_cmd(0x38);
     i2clcd_cmd(0x39);
@@ -56,14 +56,14 @@ void init_i2clcd(void)
     i2clcd_cmd(0x56);
     i2clcd_cmd(0x6c);
 
-    driverTimer::systick_delay(200);
+    driverSysTick::systick_delay(200);
 
     i2clcd_cmd(0x38);
     i2clcd_cmd(0x0c);
     i2clcd_cmd(0x01);
     #endif
 
-    driverTimer::systick_delay(2);
+    driverSysTick::systick_delay(2);
 }
 
 

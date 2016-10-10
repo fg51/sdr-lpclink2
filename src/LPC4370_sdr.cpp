@@ -10,10 +10,11 @@
 
 #include "driver/common_driver.h"
 
-#include "driver/timer.h"
-using driverTimer::init_systick;
-using driverTimer::systick_delay;
-using driverTimer::get_msTicks;
+#include "driver/systick_cfg.h"
+using driverSysTick::setup_systemclock;
+using driverSysTick::init_systick;
+using driverSysTick::systick_delay;
+using driverSysTick::get_msTicks;
 
 #include "driver/led1.h"
 using driverLED::init_led1;
@@ -40,6 +41,7 @@ void led1_blinkly(uint32_t tick);
 
 
 int main(void) {
+    setup_systemclock(); // to 204 [MHz]
 
     init_systick();
 
