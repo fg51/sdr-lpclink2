@@ -17,6 +17,7 @@ extern "C" {
 
 void init_systick(void);
 void systick_delay(uint32_t delayTicks);
+uint32_t get_msTicks(void);
 
 
 #ifdef __cplusplus

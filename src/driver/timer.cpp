@@ -44,6 +44,12 @@ void systick_delay(const uint32_t kDelayTicks) {
 }
 
 
+uint32_t get_msTicks(void)
+{
+    return msTicks;
+}
+
+
 #ifdef __cplusplus
 } // extern "C"
 } // namespace driverTimer
